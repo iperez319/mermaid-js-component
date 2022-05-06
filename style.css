@@ -1,0 +1,9 @@
+body {
+    font-family: Roboto;
+}
+
+live-preview::part(box) {
+    border: 1px solid brown;
+    display: flex;
+    justify-content: center;
+}

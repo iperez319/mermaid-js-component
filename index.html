@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="module" src="src/LivePreview.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <live-preview id="livePreview"></live-preview>
+    <textarea id="code_input"></textarea>
+    <script type="text/javascript">
+        console.log(code_input)
+        code_input.addEventListener("input", evt => {
+            livePreview.setAttribute("code", evt.target.value)
+        })
+        livePreview.addEventListener("error", () => {
+            console.log("Show syntax error")
+        })
+    </script>
+</body>
+</html>

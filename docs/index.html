@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation</title>
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+    <main>
+        <h1>Documentation for Mermaid-js Graph Viewer</h1>
+
+        <section>
+            <h2>HTML Attributes</h2>
+            <ul>
+                <li>code: the text representation of the graph you want to render</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>CSS parts</h2>
+            <ul>
+                <li>box: styles the div that contains the rendered graph</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Events</h2>
+            <ul>
+                <li>error: event is thrown whenever there is a syntax error in the graph</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Code to Copy</h2>
+            <pre>
+import {html, css, LitElement} from "https://cdn.jsdelivr.net/gh/lit/dist@2/core/lit-core.min.js";
+import "https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js";
+
+const { mermaid: mermaidAPI } = window;
+
+export class LivePreview extends LitElement {
+  static properties = {
+    code: {},
+  };
+  // Define scoped styles right with your component, in plain CSS
+  // static styles = css`
+  //   :host {
+  //     color: blue;
+  //   }
+  // `;
+
+  constructor() {
+    super();
+    // Mermaid.js default graph
+    this.code = `
+      graph TD 
+      A[Client] --> B[Load Balancer] 
+      B --> C[Server1] 
+      B --> D[Server2]
+    `;
+  }
+
+  // Render the UI as a function of component state
+  render() {
+    try {
+      mermaidAPI.render('mermaid', this.code, svg => {
+        if(this.shadowRoot.querySelector("#mermaid")){
+          this.shadowRoot.getElementById("mermaid").innerHTML = svg;
+        } else {
+          let newDiv = document.createElement("div");
+          newDiv.id = "mermaid";
+          newDiv.innerHTML = svg;
+          newDiv.part = "box"
+          this.shadowRoot.appendChild(newDiv);
+      }}); 
+    } catch (err) {
+      this.dispatchEvent(new CustomEvent('error', { detail: err }));
+    }
+    return html``;
+  }
+
+}
+
+customElements.define('live-preview', LivePreview);
+            </pre>
+        </section>
+        
+    </main>
+</body>
+</html>
