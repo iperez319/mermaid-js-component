@@ -9,16 +9,140 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <live-preview id="livePreview"></live-preview>
-    <textarea id="code_input"></textarea>
+    <h1>Demos</h1>
+    <section id="demo-1">
+        <h2>Demo 1: Textarea</h2>
+        <div style="display:flex">
+            <live-preview id="livePreview"></live-preview>
+            <textarea id="code_input">
+graph TD 
+A[Client] --> B[Load Balancer] 
+B --> C[Server1] 
+B --> D[Server2]
+            </textarea>
+        </div>
+    </section>
+    <section id="demo-2">
+        <h2>Demo 2: Textboxes</h2>
+        <div style="display:flex">
+            <live-preview id="livePreview2"></live-preview>
+            
+            <div style="display:flex;flex-direction:column;gap:10px">
+                <label for="input1">Box #1</label>
+                <input type="text" id="input1" value="Client"/>
+                <label for="input2">Box #2</label>
+                <input type="text" id="input2" value="Load Balancer"/>
+                <label for="input3">Box #3</label>
+                <input type="text" id="input3" value="Server 1"/>
+                <label for="input4">Box #4</label>
+                <input type="text" id="input4" value="Server 2"/>
+            </div>
+           
+        </div>
+    </section>
+    <section id="demo-3">
+        <h2>Demo 3: Textarea with JS</h2>
+        <div style="display:flex">
+            <live-preview id="livePreview3"></live-preview>
+            <textarea id="code_input3">
+graph TD 
+A[Client] --> B[Load Balancer] 
+B --> C[Server1] 
+B --> D[Server2]
+            </textarea>
+        </div>
+    </section>
+    <section id="demo-4">
+        <h2>Demo 4: Textboxes with JS</h2>
+        <div style="display:flex">
+            <live-preview id="livePreview4"></live-preview>
+            
+            <div style="display:flex;flex-direction:column;gap:10px">
+                <label for="input14">Box #1</label>
+                <input type="text" id="input14" value="Client"/>
+                <label for="input24">Box #2</label>
+                <input type="text" id="input24" value="Load Balancer"/>
+                <label for="input34">Box #3</label>
+                <input type="text" id="input34" value="Server 1"/>
+                <label for="input44">Box #4</label>
+                <input type="text" id="input44" value="Server 2"/>
+            </div>
+           
+        </div>
+    </section>
+    <section>
+        <h2>Demo 5: Static</h2>
+        <live-preview id="livePreview5" 
+        code="graph TD 
+        A[Client] --> B[Load Balancer] 
+        B --> C[Server1] 
+        B --> D[Server2]"></live-preview>
+    </section>
     <script type="text/javascript">
-        console.log(code_input)
+        // DEMO #1
         code_input.addEventListener("input", evt => {
             livePreview.setAttribute("code", evt.target.value)
         })
         livePreview.addEventListener("error", () => {
             console.log("Show syntax error")
         })
+
+        // DEMO #2
+
+        let generateCode = () => {
+            return `
+                graph TD 
+                A[${input1.value}] --> B[${input2.value}] 
+                B --> C[${input3.value}] 
+                B --> D[${input4.value}]
+            `
+        }
+        input1.addEventListener("input", () => {
+            livePreview2.setAttribute("code", generateCode())
+        })
+        input2.addEventListener("input", () => {
+            livePreview2.setAttribute("code", generateCode())
+        })
+        input3.addEventListener("input", () => {
+            livePreview2.setAttribute("code", generateCode())
+        })
+        input4.addEventListener("input", () => {
+            livePreview2.setAttribute("code", generateCode())
+        })
+
+        // DEMO #3
+
+        code_input3.addEventListener("input", evt => {
+            livePreview3.code = evt.target.value;
+        })
+        livePreview3.addEventListener("error", () => {
+            console.log("Show syntax error")
+        })
+
+
+        // DEMO #4
+
+        let generateCode4 = () => {
+            return `
+                graph TD 
+                A[${input14.value}] --> B[${input24.value}] 
+                B --> C[${input34.value}] 
+                B --> D[${input44.value}]
+            `
+        }
+        input14.addEventListener("input", () => {
+            livePreview4.code = generateCode4();
+        })
+        input24.addEventListener("input", () => {
+            livePreview4.code = generateCode4();        
+        })
+        input34.addEventListener("input", () => {
+            livePreview4.code = generateCode4();        
+        })
+        input44.addEventListener("input", () => {
+            livePreview4.code = generateCode4();
+        })
+
     </script>
 </body>
 </html>
